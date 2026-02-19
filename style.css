@@ -1,0 +1,279 @@
+:root {
+    --bg-color: #f0f0f5;
+    --panel-bg: rgba(255, 255, 255, 0.4);
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --accent-color: #FF69B4;
+    /* Hot Pink */
+
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Times New Roman', serif;
+    /* Poimandres uses mix */
+
+    --led-on: #FF69B4;
+    --led-off: #ddd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    position: relative;
+    /* Glassmorphism Light */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+}
+
+.logo .model {
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-left: 5px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.led {
+    width: 10px;
+    height: 10px;
+    background: var(--led-off);
+    border-radius: 50%;
+}
+
+.led.active {
+    background: var(--led-on);
+    box-shadow: 0 0 10px var(--led-on);
+}
+
+/* Main Layout */
+.meter-display {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+/* Visualizer (Background-ish) */
+/* Visualizer (Background-ish) */
+.visualizer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* Let clicks pass through */
+}
+
+/* Ensure canvases overlap coaxially */
+.visualizer-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#radar-canvas {
+    z-index: 20;
+    mix-blend-mode: multiply;
+    /* Darken for visibility on light bg */
+}
+
+#physics-canvas {
+    z-index: 5;
+    opacity: 0.6;
+}
+
+#current-lufs-value {
+    display: none;
+    /* Hide center value, move to side */
+}
+
+.center-info {
+    display: none;
+}
+
+
+/* Specs / Stats Overlay */
+.stats-panel {
+    z-index: 10;
+    width: 300px;
+    margin-left: auto;
+    /* Push to right */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background: transparent;
+    border: none;
+}
+
+.stat-row {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #000;
+    font-family: var(--font-primary);
+    letter-spacing: -1px;
+}
+
+/* Target Selector */
+.target-selector {
+    border-top: 2px solid #000;
+    padding-top: 20px;
+}
+
+.radio-group label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+/* Footer / Controls */
+.controls-panel {
+    z-index: 10;
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 30px;
+    background: transparent;
+    border: none;
+}
+
+.drop-zone {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    /* Circle Drop Zone */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s;
+    background: transparent;
+    cursor: pointer;
+}
+
+.drop-zone:hover {
+    background: var(--text-primary);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.drop-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 20px;
+}
+
+.player-controls {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.transport-buttons {
+    margin-bottom: 10px;
+}
+
+.icon-btn {
+    font-size: 1.5rem;
+    color: #000;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.icon-btn:hover {
+    color: var(--accent-color);
+}
+
+/* Timeline */
+.timeline-container {
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.waveform-wrapper {
+    background: transparent;
+    border: none;
+    height: 100px;
+}
+
+.time-display {
+    color: #000;
+    font-weight: 700;
+}
+
+.monitor-control label {
+    color: #000;
+    font-weight: 700;
+}

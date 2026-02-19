@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TC Electronic Style Audio Meter</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for that technical look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Matter.js for Physics Visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                SRG PANORAMA
+                <span class="model">AUDIO INSIGHT DATA</span>
+            </div>
+            <div class="status-indicator">
+                <div id="signal-led" class="led"></div>
+            </div>
+        </header>
+
+        <!-- Main Display Area -->
+        <main class="meter-display">
+
+            <!-- Left: Circular Radar & Physics Meter -->
+            <div class="visualizer-container">
+                <!-- Canvas for Matter.js Physics (Needle/Particles) -->
+                <canvas id="physics-canvas"></canvas>
+                <!-- Canvas for Circular History (Radar) -->
+                <canvas id="radar-canvas"></canvas>
+
+                <!-- Center Info -->
+                <div class="center-info">
+                    <span id="current-lufs-value">-oo</span>
+                    <span class="unit">LUFS</span>
+                </div>
+            </div>
+
+            <!-- Right: Numerical Stats -->
+            <div class="stats-panel">
+                <div class="stat-row">
+                    <span class="stat-label">MOMENTARY</span>
+                    <span class="stat-value" id="val-momentary">-oo LUFS</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">SHORT TERM</span>
+                    <span class="stat-value" id="val-shortterm">-oo LUFS</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">INTEGRATED</span>
+                    <span class="stat-value" id="val-integrated">-oo LUFS</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">LOUDNESS RANGE</span>
+                    <span class="stat-value" id="val-lra">0.0 LU</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">TRUE PEAK</span>
+                    <span class="stat-value" id="val-truepeak">-oo dBTP</span>
+                </div>
+
+                <div class="target-selector">
+                    <h3>TARGET</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="target" value="-14" checked> Streaming (-14)</label>
+                        <label><input type="radio" name="target" value="-23"> Broadcast (-23)</label>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Controls -->
+        <footer class="controls-panel">
+            <!-- File Drop Zone -->
+            <label id="drop-zone" class="drop-zone" for="file-input">
+                <span class="drop-text">DRAG AUDIO FILE HERE OR CLICK TO UPLOAD</span>
+                <input type="file" id="file-input" accept="audio/*,.mp3,.wav,.flac,.ogg,.m4a,.aac,.aiff,.wma" hidden>
+            </label>
+
+            <!-- Player Controls -->
+            <div class="player-controls disabled" id="player-controls">
+                <div class="transport-buttons">
+                    <button id="btn-play" class="btn icon-btn">▶</button>
+                    <button id="btn-stop" class="btn icon-btn">■</button>
+                    <button id="btn-loop" class="btn icon-btn dim">↻</button>
+                </div>
+
+                <div class="timeline-container">
+                    <span id="time-current" class="time-display">00:00</span>
+                    <div class="waveform-wrapper">
+                        <canvas id="waveform-canvas"></canvas>
+                    </div>
+                    <span id="time-total" class="time-display">00:00</span>
+                </div>
+            </div>
+
+            <!-- Monitor Volume -->
+            <div class="monitor-control">
+                <label>MONITOR</label>
+                <input type="range" id="monitor-vol" min="0" max="1" step="0.01" value="1">
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
